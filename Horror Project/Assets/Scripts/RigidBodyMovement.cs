@@ -7,11 +7,15 @@ public class RigidBodyMovement : MonoBehaviour
 {
     [SerializeField] float speed = 10f;
     [SerializeField] float jumpForce = 10f;
+    [SerializeField] float radius = .5f;
+
+    LayerMask stairs = 1 << 7;
+    LayerMask ground = 1 << 6;
 
     public Transform feet;
 
     Rigidbody rb;
-    MouseControls mc;
+    MouseControls mouseControls;
 
     Vector3 movement;
 
@@ -22,19 +26,18 @@ public class RigidBodyMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        mc = GetComponent<MouseControls>();
+        mouseControls = GetComponent<MouseControls>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        movement = Vector3.Normalize(new Vector3(Input.GetAxis("Horizontal"), rb.velocity.y, Input.GetAxis("Vertical")));
 
-        isGrounded = Physics.CheckSphere(feet.position, .5f,1<<6);
+        isGrounded = Physics.CheckSphere(feet.position, .5f,ground);
         Debug.Log(isGrounded);
 
         isJump = Input.GetButtonDown("Jump") && isGrounded;
-
 
         if (isJump)
         {
@@ -49,6 +52,11 @@ public class RigidBodyMovement : MonoBehaviour
         MovePlayer();
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(feet.position, stairs);
+    }
 
     void HandleRotation()
     {
@@ -57,14 +65,14 @@ public class RigidBodyMovement : MonoBehaviour
 
     void MovePlayer()
     {
-        rb.AddForce(movement.normalized * speed);
+        rb.velocity=movement * speed;
 
         HandleStairs();
     }
 
     void Jump()
     {
-        rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+
     }
 
     void HandleStairs()
