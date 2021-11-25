@@ -72,7 +72,7 @@ public class RigidBodyMovement : MonoBehaviour
 
     void Jump()
     {
-
+        rb.AddForce(0, jumpForce, 0);
     }
 
     void HandleStairs()
