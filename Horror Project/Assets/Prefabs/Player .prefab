@@ -93,8 +93,8 @@ GameObject:
   - component: {fileID: 5759794995746612990}
   - component: {fileID: 5759794995746612964}
   - component: {fileID: 5759794995746612965}
-  - component: {fileID: 5759794995746612991}
   - component: {fileID: 1038827696}
+  - component: {fileID: 2121656338216143310}
   m_Layer: 8
   m_Name: 'Player '
   m_TagString: Player
@@ -161,7 +161,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 6241287516176643942}
   Sensitivity: 250
---- !u!114 &5759794995746612991
+--- !u!114 &1038827696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5759794995746612989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8718ac3006388a846bfc5a6c39fc9c72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 5
+  items: []
+  keys: []
+--- !u!114 &2121656338216143310
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,23 +196,9 @@ MonoBehaviour:
   crouchSpeed: 2
   bumpDetectionRange: 1
   jumpVelocity: 2.5
-  jumpDetectionRadius: 0.25
+  jumpDetectionRadius: 0
   offset: 0.5
   climbRate: 0.1
---- !u!114 &1038827696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5759794995746612989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8718ac3006388a846bfc5a6c39fc9c72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  size: 5
-  items: []
 --- !u!1 &5759794996386337573
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,7 +210,6 @@ GameObject:
   - component: {fileID: 5759794996386337568}
   - component: {fileID: 5759794996386337575}
   - component: {fileID: 5759794996386337574}
-  - component: {fileID: 5759794996386337572}
   - component: {fileID: 1601038276}
   m_Layer: 8
   m_Name: MainCamera
@@ -284,24 +284,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5759794996386337573}
   m_Enabled: 1
---- !u!114 &5759794996386337572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5759794996386337573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84c17e338776c6f4c99cab24708bc18a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkRate: 13
-  runRate: 18
-  ampValue: 0.0002
-  toggleSpeed: 2
-  runToggleSpeed: 5
-  MovementScript: {fileID: 5759794995746612991}
 --- !u!114 &1601038276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,6 +299,7 @@ MonoBehaviour:
   whatIsInteractable:
     serializedVersion: 2
     m_Bits: 512
+  _text: {fileID: 0}
 --- !u!1 &6241287516176643943
 GameObject:
   m_ObjectHideFlags: 0

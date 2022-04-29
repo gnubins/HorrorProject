@@ -36,7 +36,7 @@ public class RigidbodyMovement : MonoBehaviour
     Rigidbody rb;
     CapsuleCollider col;
 
-    public Vector3 myVelocity { get; private set; }
+    public Vector3 velocity { get; private set; }
     Vector3 movementVector;
     Vector3 feetPos;
     Vector3 kneePos;
@@ -62,7 +62,7 @@ public class RigidbodyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        myVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
         feetPos = transform.position - new Vector3(0,  1f, 0);
         kneePos = transform.position - new Vector3(0,  .4f, 0);

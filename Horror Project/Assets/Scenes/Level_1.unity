@@ -165,6 +165,14 @@ PrefabInstance:
       propertyPath: _text
       value: 
       objectReference: {fileID: 1315098990}
+    - target: {fileID: 2121656338216143310, guid: 9a0121c430d25d0469ea1978f6087db9, type: 3}
+      propertyPath: offset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2121656338216143310, guid: 9a0121c430d25d0469ea1978f6087db9, type: 3}
+      propertyPath: jumpDetectionRadius
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 5759794995746612985, guid: 9a0121c430d25d0469ea1978f6087db9, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -213,17 +221,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'Player '
       objectReference: {fileID: 0}
-    - target: {fileID: 5759794996386337572, guid: 9a0121c430d25d0469ea1978f6087db9, type: 3}
+    - target: {fileID: 0}
       propertyPath: ampValue
-      value: 0.002
-      objectReference: {fileID: 0}
-    - target: {fileID: 5759794996386337572, guid: 9a0121c430d25d0469ea1978f6087db9, type: 3}
-      propertyPath: toggleSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5759794996386337572, guid: 9a0121c430d25d0469ea1978f6087db9, type: 3}
-      propertyPath: runToggleSpeed
-      value: 3
+      value: 0.00002
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a0121c430d25d0469ea1978f6087db9, type: 3}
@@ -559,6 +559,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 6ef04a5e7549b7a4b8167a04ee70d3e4, type: 3}
       propertyPath: m_Name
       value: model room
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6ef04a5e7549b7a4b8167a04ee70d3e4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3596962906990458199, guid: 6ef04a5e7549b7a4b8167a04ee70d3e4, type: 3}
       propertyPath: m_IsActive
@@ -944,6 +948,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8391222552659086748, guid: 2512ae748236b154abd46263fe08dbec, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -7640558969779515294, guid: 2512ae748236b154abd46263fe08dbec, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 2512ae748236b154abd46263fe08dbec, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -952,6 +964,18 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 108a6532685d3da4bb131e4bef28eb93, type: 2}
+    - target: {fileID: -7146521406498821007, guid: 2512ae748236b154abd46263fe08dbec, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -1599826595754709761, guid: 2512ae748236b154abd46263fe08dbec, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -516098083770646512, guid: 2512ae748236b154abd46263fe08dbec, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2512ae748236b154abd46263fe08dbec, type: 3}
       propertyPath: m_Name
       value: Intro Hall Way
@@ -962,7 +986,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2512ae748236b154abd46263fe08dbec, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416272007918961125, guid: 2512ae748236b154abd46263fe08dbec, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2512ae748236b154abd46263fe08dbec, type: 3}
