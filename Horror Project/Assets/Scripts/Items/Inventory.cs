@@ -12,15 +12,20 @@ public class Inventory : MonoBehaviour
     [SerializeField] int size = 5;
     public List<Item> items = new List<Item>();
 
-    public List<Key> keys = new List<Key>();
+    public List<Key> keyChain = new List<Key>();
 
     public void AddKey(Key key)
     {
-        keys.Add(key);
+        keyChain.Add(key);
     }
 
     public void AddItem(Item item)
     {
+        if(size<items.Count)
+        {
+            Debug.Log("Inventory is full");
+            return;
+        }
         items.Add(item);
     }
 

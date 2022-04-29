@@ -23,7 +23,7 @@ public class Door : MonoBehaviour,IInteractable
 
     public void Interact()
     {
-        if (Inventory.instance.keys.Contains(key))
+        if (Inventory.instance.keyChain.Contains(key))
         {
             isLocked = false;
         }
