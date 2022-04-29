@@ -1,87 +1,179 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RigidBodyMovement : MonoBehaviour
+public class RigidbodyMovement : MonoBehaviour
 {
-    [SerializeField] float speed = 10f;
-    [SerializeField] float jumpForce = 10f;
-    [SerializeField] float radius = .5f;
 
-    LayerMask stairs = 1 << 7;
-    LayerMask ground = 1 << 6;
+    //TODO
+    //Change to addforce
 
-    public Transform feet;
+
+    [SerializeField] LayerMask jumpable;
+
+    [SerializeField] float walkSpeed = 3f;
+    [SerializeField] float runSpeed = 5f;
+    [SerializeField] float crouchSpeed = 2f;
+    [SerializeField] float bumpDetectionRange = 1f;
+    [SerializeField] float jumpVelocity = 2.5f;
+    [SerializeField] float jumpDetectionRadius;
+    [SerializeField] float offset=.5f;
+    [SerializeField] float climbRate = .1f;
+
+    //Variables
+    #region
+    float height;
+
+    bool run;
+    bool isMoving;
+    bool detectStairs;
+    bool stairsTooHigh;
+    bool crouch;
+    bool crouched = false;
+
+    public bool isGrounded { get; private set; }
 
     Rigidbody rb;
-    MouseControls mouseControls;
+    CapsuleCollider col;
 
-    Vector3 movement;
+    public Vector3 myVelocity { get; private set; }
+    Vector3 movementVector;
+    Vector3 feetPos;
+    Vector3 kneePos;
 
-    bool isGrounded;
-    bool isJump;
+    Ray ray;
+    RaycastHit hit;
+    RaycastHit hit2;
+    #endregion
 
     // Start is called before the first frame update
     void Start()
     {
+        isGrounded = false;
+
         rb = GetComponent<Rigidbody>();
-        mouseControls = GetComponent<MouseControls>();
+        col = GetComponent<CapsuleCollider>();
+        height = col.height;
     }
+
+    //UpdateLoop
+    #region
 
     // Update is called once per frame
     void Update()
     {
-        movement = Vector3.Normalize(new Vector3(Input.GetAxis("Horizontal"), rb.velocity.y, Input.GetAxis("Vertical")));
+        myVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
-        isGrounded = Physics.CheckSphere(feet.position, .5f,ground);
-        Debug.Log(isGrounded);
+        feetPos = transform.position - new Vector3(0,  1f, 0);
+        kneePos = transform.position - new Vector3(0,  .4f, 0);
 
-        isJump = Input.GetButtonDown("Jump") && isGrounded;
+        run = Input.GetKey(KeyCode.LeftShift);
+        crouch = Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.C);
 
-        if (isJump)
+        if (Input.GetButtonDown("Jump"))
         {
             Jump();
         }
 
-        HandleRotation();
+        if (crouch)
+        {
+            crouched = !crouched;
+        }
+
+        Crouch();
+
+        isGrounded = Physics.CheckSphere(transform.position - new Vector3(0, offset, 0), jumpDetectionRadius,jumpable);
+        isMoving = movementVector.magnitude > 2f;
+        HandleStairs();
     }
 
+    //movement
     private void FixedUpdate()
     {
-        MovePlayer();
+        float x;
+        float z;
+
+        if (run)
+        {
+            x = Input.GetAxis("Horizontal") * runSpeed;
+            z = Input.GetAxis("Vertical") * runSpeed;
+        }
+        else if (crouched)
+        {
+            x = Input.GetAxis("Horizontal") * crouchSpeed;
+            z = Input.GetAxis("Vertical") *   crouchSpeed;
+        }
+        else
+        {
+            x = Input.GetAxis("Horizontal") * walkSpeed;
+            z = Input.GetAxis("Vertical") * walkSpeed;
+        }
+
+        movementVector = new Vector3(x, 0, z);
+        rb.velocity = transform.forward * z + transform.right * x + new Vector3(0, rb.velocity.y, 0);
     }
 
-    private void OnDrawGizmos()
+    #endregion
+
+
+    //methods
+    #region
+    void HandleStairs()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(feet.position, stairs);
+        raycastDetectStairs();
+        if (detectStairs && !stairsTooHigh && isMoving)
+        {
+            rb.transform.position += new Vector3(0, climbRate, 0);
+        }
     }
 
-    void HandleRotation()
+    void raycastDetectStairs()
     {
 
-    }
+        Vector3 right = Vector3.Normalize(transform.forward + transform.right);
+        Vector3 left = Vector3.Normalize(transform.forward - transform.right);
 
-    void MovePlayer()
-    {
-        rb.velocity=movement * speed;
+        detectStairs 
+            = Physics.Raycast(feetPos,transform.forward, out hit,bumpDetectionRange, jumpable)
+                    || Physics.Raycast(feetPos, right, out hit,bumpDetectionRange, jumpable)
+                    || Physics.Raycast(feetPos, left, out hit ,bumpDetectionRange, jumpable);
 
-        HandleStairs();
+        stairsTooHigh
+                 = Physics.Raycast(kneePos,transform.forward, out hit2, bumpDetectionRange, jumpable)
+                || Physics.Raycast(kneePos, right, out hit2, bumpDetectionRange, jumpable)
+                || Physics.Raycast(kneePos, left,  out hit2, bumpDetectionRange, jumpable);
     }
 
     void Jump()
     {
+        if (isGrounded)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, rb.velocity.z);
 
+            isGrounded = false;
+        }
     }
 
-    void HandleStairs()
+    void Crouch()
     {
-
+        if (crouched)
+        {
+            col.height = Mathf.Lerp(col.height, .5f,.5f);
+        }
+        else
+        {
+            col.height = Mathf.Lerp(col.height, height, .01f);
+        }
     }
+    #endregion
 
-    void AutoStop()
+    private void OnDrawGizmos()
     {
-
+        Gizmos.color = isGrounded ? Color.red : Color.white;
+        Gizmos.DrawWireSphere(transform.position - new Vector3(0, offset, 0), jumpDetectionRadius);
+        Gizmos.DrawRay(ray);
+        Gizmos.DrawSphere(feetPos, .1f);
+        Gizmos.DrawSphere(kneePos, .1f);
     }
+   
 }
