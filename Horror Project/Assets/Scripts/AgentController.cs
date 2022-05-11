@@ -94,16 +94,29 @@ public class AgentController : MonoBehaviour
         playerWasInSight = false;
     }
 
-    Vector3 randomPoint;
+    Vector3 acceptablePoint;
+    float range = 15f;
     IEnumerator Roam()
     {
         while (true)
         {
-            randomPoint = new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)) + transform.position;
-            agent.SetDestination(randomPoint);
-            yield return new WaitForSeconds(3f);
+            Vector3 randomPoint = Random.insideUnitSphere * range;
+            Debug.Log(randomPoint.magnitude);
+            if (randomPoint.magnitude > 14)
+            {
+                acceptablePoint = randomPoint + transform.position;
+                if (NavMesh.SamplePosition(acceptablePoint, out NavMeshHit navMeshHit, range, NavMesh.AllAreas))
+                {
+                    agent.SetDestination(navMeshHit.position);
+                    Debug.DrawLine(transform.position, navMeshHit.position, Color.blue, 1f);
+                }
+                yield return new WaitForSeconds(5f);
+            }
+            else
+            {
+                yield return null;
+            }
         }
-       
     }
 
     Vector3 DirFromAngle(float Angle,bool isGlobal)
@@ -118,7 +131,6 @@ public class AgentController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(transform.position, randomPoint);
 
         //Gizmos.DrawWireSphere(transform.position, radius);
 
