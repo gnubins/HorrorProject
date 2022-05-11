@@ -13,9 +13,9 @@ TagManager:
   - UI
   - Ground
   - Stairs
-  - Entity
+  - Player
   - Interactable
-  - 
+  - Monster
   - 
   - 
   - 

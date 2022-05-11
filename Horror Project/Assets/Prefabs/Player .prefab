@@ -175,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 5
   items: []
-  keys: []
+  keyChain: []
 --- !u!114 &2121656338216143310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,8 +196,8 @@ MonoBehaviour:
   crouchSpeed: 2
   bumpDetectionRange: 1
   jumpVelocity: 2.5
-  jumpDetectionRadius: 0
-  offset: 0.5
+  jumpDetectionRadius: 0.35
+  offset: 0.9
   climbRate: 0.1
 --- !u!1 &5759794996386337573
 GameObject:
