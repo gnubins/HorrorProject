@@ -6,14 +6,16 @@ using UnityEngine.AI;
 public class AgentController : MonoBehaviour
 {
 
-    [SerializeField] List<GameObject> wayPoints;
-
+    [SerializeField] Animator anim;
     int currPointIndex;
 
     #region
     [Header("Detection")]
     [SerializeField] float radius;
     [SerializeField,Range(0,360)] float angle;
+
+    [SerializeField, Range(0, 20)] float range = 15f;
+    Vector3 acceptablePoint;
 
     public LayerMask mask;
 
@@ -47,6 +49,8 @@ public class AgentController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        anim.SetFloat("Speed", agent.velocity.magnitude);
+
         //CheckForTarget();
 
         //if (targetIsInSight)
@@ -94,15 +98,12 @@ public class AgentController : MonoBehaviour
         playerWasInSight = false;
     }
 
-    Vector3 acceptablePoint;
-    float range = 15f;
     IEnumerator Roam()
     {
         while (true)
         {
             Vector3 randomPoint = Random.insideUnitSphere * range;
-            Debug.Log(randomPoint.magnitude);
-            if (randomPoint.magnitude > 14)
+            if (randomPoint.magnitude > range-2)
             {
                 acceptablePoint = randomPoint + transform.position;
                 if (NavMesh.SamplePosition(acceptablePoint, out NavMeshHit navMeshHit, range, NavMesh.AllAreas))
@@ -127,6 +128,7 @@ public class AgentController : MonoBehaviour
         }
         return new Vector3(Mathf.Sin(Angle * Mathf.Deg2Rad), 0, Mathf.Cos(Angle * Mathf.Deg2Rad));
     }
+
     #endregion
 
     private void OnDrawGizmos()
