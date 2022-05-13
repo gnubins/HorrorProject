@@ -8,7 +8,7 @@ public class RigidbodyMovement : MonoBehaviour
     //TODO
     //Change to addforce
 
-
+    [SerializeField] Animator cameraAnim;
     [SerializeField] LayerMask jumpable;
 
     [SerializeField] float walkSpeed = 3f;
@@ -62,6 +62,8 @@ public class RigidbodyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        cameraAnim.SetFloat("Speed", velocity.magnitude);
+
         velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
         feetPos = transform.position - new Vector3(0,  1f, 0);

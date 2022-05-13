@@ -5,7 +5,6 @@ public class Door : MonoBehaviour,IInteractable
 {
     [SerializeField] Key key;
 
-    Rigidbody rb;
     Animator anim;
     [SerializeField] Animator anim2;
 
@@ -15,10 +14,6 @@ public class Door : MonoBehaviour,IInteractable
     void Start()
     {
         anim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
-        rb.isKinematic = true;
-        //float end = -90;
-        //Debug.Log((end < 0 ? -1 : 1));
     }
 
     public void Interact()

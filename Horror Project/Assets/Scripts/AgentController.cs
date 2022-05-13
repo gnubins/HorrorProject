@@ -7,7 +7,6 @@ public class AgentController : MonoBehaviour
 {
 
     [SerializeField] Animator anim;
-    int currPointIndex;
 
     #region
     [Header("Detection")]
@@ -32,21 +31,15 @@ public class AgentController : MonoBehaviour
 
     #endregion
 
-    // Start is called before the first frame update
     void Start()
     {
-        //rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
 
-        currPointIndex = 0;
-
-        //agent.SetDestination(wayPoints[currPointIndex].transform.position);
         playerWasInSight = false;
 
         StartCoroutine(Roam());
     }
 
-    // Update is called once per frame
     void Update()
     {
         anim.SetFloat("Speed", agent.velocity.magnitude);
