@@ -86,7 +86,6 @@ public class RigidbodyMovement : MonoBehaviour
 
         isGrounded = Physics.CheckSphere(transform.position - new Vector3(0, offset, 0), jumpDetectionRadius,jumpable);
         isMoving = movementVector.magnitude > 2f;
-        HandleStairs();
     }
 
     //movement
@@ -112,6 +111,7 @@ public class RigidbodyMovement : MonoBehaviour
         }
 
         movementVector = new Vector3(x, 0, z);
+        HandleStairs();
         rb.velocity = transform.forward * z + transform.right * x + new Vector3(0, rb.velocity.y, 0);
     }
 
